@@ -223,6 +223,8 @@ Abra **[http://localhost:3000](http://localhost:3000)** no navegador — a pági
    - **Número de WhatsApp** e texto de dúvidas.
 3. Salve — pronto, a rifa já está funcional.
 
+> **Observação importante:** antes de divulgar a sua rifa pra valer, faça um teste real de pagamento (um Pix de valor baixo, tipo R$0,01 ou R$1,00) escaneando o QR code gerado pelo próprio sistema com o app do seu banco. Confirme que o valor aparece certo, que o nome do recebedor bate, e principalmente que o dinheiro cai na conta correta — só depois desse teste real é que vale divulgar o link pra outras pessoas.
+
 ---
 
 ## Parte 3 — Publicando na internet (Vercel)

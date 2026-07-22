@@ -21,6 +21,7 @@
 - [Parte 3 — Publicando na internet (Vercel)](#parte-3--publicando-na-internet-vercel)
 - [Solução de problemas comuns](#solução-de-problemas-comuns)
 - [Arquitetura](#arquitetura-resumo-técnico)
+- [Deixe o seu obrigado](#deixe-o-seu-obrigado)
 
 ## Sobre o projeto
 
@@ -271,6 +272,20 @@ Pronto — sua rifa está no ar, de graça, e pronta para receber participantes.
 - Um documento por número da rifa (`tickets/{numero}`), não um array num doc só — permite que o Firestore paralelize reservas de números diferentes, e só há conflito real quando duas pessoas tentam o **mesmo** número.
 - Toda mudança de estado de reserva roda dentro de uma transação do Firestore, que sempre revalida a disponibilidade real antes de confirmar — impossível vender o mesmo número duas vezes.
 - Dois documentos denormalizados (`ticketsState/summary` e `raffleState/stats`) são atualizados como efeito colateral (fora da transação principal) para que a grade de disponibilidade e o total arrecadado/ranking sejam lidos com 1-2 leituras, não uma por documento.
+
+## Deixe o seu obrigado
+
+Se este projeto te ajudou, considere pagar um café pro criador via Pix (qualquer valor, não tem valor fixo):
+
+<img src="docs/pix/qrcode-cafe.png" alt="QR code Pix para agradecer ao criador" width="220" />
+
+**Pix copia e cola:**
+
+```
+00020126360014br.gov.bcb.pix0114+55799813602065204000053039865802BR5925VICTOR HANIEL ROLEMBERG S6007ARACAJU62120508OBRIGADO6304F109
+```
+
+**Nome:** Victor Haniel Rolemberg Silva Moura · **Banco:** Wise
 
 ## Licença
 

@@ -1,0 +1,55 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public raffle config: readable by anyone, only the Admin SDK writes.
+    match /config/{docId} {
+      allow get, list: if true;
+      allow write: if false;
+    }
+
+    // The client never reads tickets directly — availability is served
+    // through the cached /api/tickets route (Admin SDK) to keep a live
+    // availability grid from costing 500 reads per visitor. Deny the
+    // client entirely; only the Admin SDK reads/writes this collection.
+    match /tickets/{ticketId} {
+      allow get, list: if false;
+      allow write: if false;
+    }
+
+    // Denormalized summary of non-available tickets, kept only so
+    // /api/tickets can compute availability with 1 read instead of 500.
+    // Client never reads this directly; only the Admin SDK does.
+    match /ticketsState/{docId} {
+      allow get, list: if false;
+      allow write: if false;
+    }
+
+    // Denormalized raised-amount/buyer-ranking totals, kept in sync whenever
+    // a confirmed order's amount/buyer/tickets change — lets the homepage
+    // avoid reading every confirmed order just to show progress. Client
+    // never reads this directly; only the Admin SDK does.
+    match /raffleState/{docId} {
+      allow get, list: if false;
+      allow write: if false;
+    }
+
+    // Pix receiving key/merchant info, editable by the admin from
+    // /admin/configuracoes. Deliberately a separate collection from
+    // config/ (which is publicly readable) since this is
+    // where-the-money-goes data — client never reads it directly.
+    match /paymentSettings/{docId} {
+      allow get, list: if false;
+      allow write: if false;
+    }
+
+    // Orders hold buyer name/phone. `get` by known id lets the payment
+    // page poll its own order for live status; `list` is denied so nobody
+    // can enumerate other buyers' personal data.
+    match /orders/{orderId} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if false;
+    }
+  }
+}

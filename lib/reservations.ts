@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { FieldValue } from "firebase-admin/firestore";
+import { FieldPath, FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { generatePixPayload } from "@/lib/pix";
 import { MAX_TICKETS_PER_ORDER, MIN_DONATION_CENTS, RESERVATION_TTL_MINUTES } from "@/lib/config";
@@ -62,13 +62,21 @@ async function adjustRaffleStats(delta: {
   buyerName?: string;
   ticketCountDelta?: number;
 }): Promise<void> {
-  const updates: Record<string, FieldValue> = {
-    raisedCents: FieldValue.increment(delta.amountCents),
-  };
+  // Buyer names are free text — a name containing "." (e.g. "Juliana Santana
+  // Sousa.") would corrupt a dot-joined string path like
+  // `buyerTicketCounts.${name}`, since Firestore treats "." as a nested-field
+  // separator. FieldPath.of() takes each segment literally instead, so the
+  // name is safe no matter what characters it contains.
   if (delta.buyerName && delta.ticketCountDelta) {
-    updates[`buyerTicketCounts.${delta.buyerName}`] = FieldValue.increment(delta.ticketCountDelta);
+    await raffleStatsRef.update(
+      "raisedCents",
+      FieldValue.increment(delta.amountCents),
+      new FieldPath("buyerTicketCounts", delta.buyerName),
+      FieldValue.increment(delta.ticketCountDelta)
+    );
+  } else {
+    await raffleStatsRef.update("raisedCents", FieldValue.increment(delta.amountCents));
   }
-  await raffleStatsRef.update(updates);
 }
 
 export class TicketsUnavailableError extends Error {

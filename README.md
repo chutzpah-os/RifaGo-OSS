@@ -7,6 +7,8 @@
 [![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange)](https://firebase.google.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org)
 
+![Página inicial da rifa com o modal "Quero participar" aberto, mostrando a seleção de números](docs/screenshots/pagina-inicial.png)
+
 ## Índice
 
 - [Sobre o projeto](#sobre-o-projeto)
@@ -48,6 +50,8 @@ O projeto é **open source** (licença MIT): qualquer pessoa pode ver o código,
 - `/admin/configuracoes`: chave Pix, total de números da rifa, e todo o conteúdo da página inicial (título, fotos, prêmio, regulamento, seção de dúvidas) — tudo editável sem precisar de redeploy
 - Página do comprador: código Pix + QR, contagem regressiva, marcar "já paguei", cancelar ou editar os próprios dados
 - Leituras no banco otimizadas por design: contadores agregados e documentos-resumo denormalizados em vez de ler a coleção inteira a cada visita
+
+![Painel admin mostrando visão geral, valor arrecadado e lista de pagamentos confirmados](docs/screenshots/painel-admin.png)
 
 ## Stack
 

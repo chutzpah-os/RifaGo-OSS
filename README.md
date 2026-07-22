@@ -199,6 +199,8 @@ npm run seed
 
 Isso cria a configuração da rifa e um documento para cada número no Firestore.
 
+> **Recomendação:** troque também o favicon (o ícone que aparece na aba do navegador) em `app/icon.svg` por um da sua cara — o arquivo atual é só um exemplo e fica com a marca do projeto original.
+
 ### 2.5. Rodar localmente
 
 ```bash

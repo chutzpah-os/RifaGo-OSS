@@ -1,7 +1,21 @@
 {
   "name": "rifago",
   "version": "0.1.0",
-  "description": "Sistema de rifas online com pagamento via Pix e painel admin, em Next.js + Firebase.",
+  "description": "Sistema open source de rifas e sorteios online com pagamento via Pix (Banco Central do Brasil), painel admin e otimizado para custo zero. Next.js + Firebase.",
+  "keywords": [
+    "rifa",
+    "rifa-online",
+    "sorteio",
+    "pix",
+    "pagamento-pix",
+    "raffle",
+    "fundraising",
+    "vaquinha",
+    "nextjs",
+    "firebase",
+    "typescript",
+    "brasil"
+  ],
   "license": "MIT",
   "private": true,
   "scripts": {

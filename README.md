@@ -1,10 +1,43 @@
-# RifaGo
+# RifaGo — Sistema de Rifas Online com Pagamento via Pix
 
-Sistema de rifas online: os participantes escolhem números (ou fazem uma doação sem número) e pagam via Pix; o organizador confirma o pagamento manualmente por um painel admin. Sem gateway de pagamento — o código Pix (copia e cola / QR) é gerado dinamicamente pelo próprio servidor.
+**Plataforma open source de rifas e sorteios online, com pagamento via Pix** (o sistema de pagamentos instantâneos do Banco Central do Brasil). Os participantes escolhem números — ou fazem uma doação livre, sem número — e pagam por Pix; o organizador confirma o recebimento manualmente por um painel administrativo. Feito em Next.js e Firebase, roda de graça nos planos gratuitos da Vercel e do Firebase.
 
-Construído com Next.js (App Router) + Firebase, pensado para rodar **inteiramente de graça** (Vercel Hobby + Firebase Spark, os planos gratuitos de cada um).
+[![Licença: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-App%20Router-black)](https://nextjs.org)
+[![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange)](https://firebase.google.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org)
 
-Este guia assume que você nunca configurou nada disso antes — vamos do zero absoluto até o site no ar.
+## Índice
+
+- [Sobre o projeto](#sobre-o-projeto)
+- [Por que usar um sistema como esse](#por-que-usar-um-sistema-como-esse)
+- [Funcionalidades](#funcionalidades)
+- [Stack](#stack)
+- [O que você vai precisar](#o-que-você-vai-precisar)
+- [Parte 1 — Banco de dados (Firebase)](#parte-1--banco-de-dados-firebase)
+- [Parte 2 — Baixando e configurando o projeto](#parte-2--baixando-e-configurando-o-projeto)
+- [Parte 3 — Publicando na internet (Vercel)](#parte-3--publicando-na-internet-vercel)
+- [Solução de problemas comuns](#solução-de-problemas-comuns)
+- [Arquitetura](#arquitetura-resumo-técnico)
+
+## Sobre o projeto
+
+**RifaGo** é um sistema completo para organizar **rifas online**, **sorteios beneficentes** e **campanhas de arrecadação** (vaquinhas com prêmio), usando o **Pix** — a infraestrutura de pagamentos instantâneos do Banco Central do Brasil — como único meio de pagamento. Não depende de nenhum gateway de pagamento de terceiros: o próprio servidor gera o código Pix "copia e cola" (BR Code / EMV) e o QR code para cada pedido, com o valor exato já embutido.
+
+É ideal para igrejas, escolas, times, associações de bairro, intercâmbios, ONGs ou qualquer pessoa organizando uma rifa/sorteio e querendo vender números (ou aceitar doações) pela internet, com um painel de controle simples para conferir manualmente os pagamentos recebidos.
+
+O projeto é **open source** (licença MIT): qualquer pessoa pode ver o código, adaptar, hospedar a própria instância e usar sem custo, seguindo o passo a passo abaixo.
+
+## Por que usar um sistema como esse
+
+- **Economiza tempo de organização** — ninguém precisa anotar manualmente em papel ou planilha quem comprou qual número.
+- **Cada participante escolhe e paga sozinho** — a pessoa entra no site, escolhe o número (ou valor da doação) e já recebe o código Pix na hora, sem precisar chamar o organizador no WhatsApp para perguntar "quais números estão livres?".
+- **Impossível vender o mesmo número duas vezes** — mesmo que duas pessoas cliquem no mesmo número ao mesmo tempo, o sistema garante que só uma reserva vale (transação atômica no banco).
+- **Números não pagos se liberam sozinhos** — se alguém reservar um número e não pagar dentro do prazo, ele volta a ficar disponível automaticamente, sem o organizador precisar ficar de olho.
+- **Transparência total** — todo participante vê quantos números já foram vendidos, quanto falta para a meta, e o ranking dos maiores compradores.
+- **Custo zero de operação** — hospedagem, banco de dados e domínio (`.vercel.app`) não custam nada nos planos usados por este guia.
+- **Configurável sem programar** — depois de instalado, tudo (chave Pix, preço por número, quantidade de números, textos da página, regulamento) é editado por um painel admin no navegador, sem precisar mexer em código ou reimplantar o site.
+- **Código aberto e auditável** — qualquer pessoa pode revisar exatamente como o Pix é gerado e como os pagamentos são conferidos, sem precisar confiar cegamente numa plataforma fechada de terceiros.
 
 ## Funcionalidades
 
